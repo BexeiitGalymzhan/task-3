@@ -21,6 +21,8 @@ function isNumberInt(value) {
 
 http
   .createServer(function (request, response) {
+    response.statusCode = 200;
+
     if (request.url.includes(MAIL)) {
       const myURL = new URL(request.url, "http://localhost:8080");
 
