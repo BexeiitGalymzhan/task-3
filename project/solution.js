@@ -15,6 +15,10 @@ function lcm(a, b) {
   return Math.abs(a * b) / gcd(a, b);
 }
 
+function isNumberInt(value) {
+  return typeof value === "number" && Number.isInteger(value);
+}
+
 http
   .createServer(function (request, response) {
     if (request.url.includes(MAIL)) {
@@ -22,18 +26,18 @@ http
 
       const params = myURL.searchParams;
 
-      const x = params.get("x").split(/\{([^}]+)\}/g)[1];
-      const y = params.get("y").split(/\{([^}]+)\}/g)[1];
+      const x = Number(params.get("x").split(/\{([^}]+)\}/g)[1]);
+      const y = Number(params.get("y").split(/\{([^}]+)\}/g)[1]);
 
-      if (Number.isFinite(Number(x)) && Number.isFinite(Number(y))) {
+      if (isNumberInt(x) && isNumberInt(y) && x > 0 && y > 0) {
         response.end(lcm(x, y).toString());
       } else {
-        response.end("incorrect");
+        response.end("NaN");
       }
     } else {
-      response.end("incorrect");
+      response.end("NaN");
     }
   })
   .listen(3000, function () {
-    console.log("Сервер запущен по адресу http://localhost:3000");
+    console.log("Сервер запущен");
   });
