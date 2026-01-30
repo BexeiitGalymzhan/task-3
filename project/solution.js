@@ -3,7 +3,7 @@ const http = require("http");
 const MAIL = "/galymzhan_bekseit_gmail_com";
 
 function gcd(a, b) {
-  while (b !== 0) {
+  while (b !== 0n) {
     let temp = b;
     b = a % b;
     a = temp;
@@ -12,7 +12,7 @@ function gcd(a, b) {
 }
 
 function lcm(a, b) {
-  return Math.abs(a * b) / gcd(a, b);
+  return (a * b) / gcd(a, b);
 }
 
 function isNumberInt(value) {
@@ -30,7 +30,7 @@ http
       const y = Number(params.get("y").split(/\{([^}]+)\}/g)[1]);
 
       if (isNumberInt(x) && isNumberInt(y) && x > 0 && y > 0) {
-        response.end(lcm(x, y).toString());
+        response.end(lcm(BigInt(x), BigInt(y)).toString());
       } else {
         response.end("NaN");
       }
