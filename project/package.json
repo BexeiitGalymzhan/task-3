@@ -1,0 +1,11 @@
+{
+  "name": "task_3",
+  "version": "1.0.0",
+  "description": "task 3",
+  "main": "solution.js",
+  "scripts": {
+    "start": "node solution.js"
+  },
+  "author": "Bexeiit",
+  "license": "ISC"
+}
