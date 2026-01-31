@@ -28,8 +28,8 @@ http
 
       const params = myURL.searchParams;
 
-      const x = Number(params.get("x").split(/\{([^}]+)\}/g)[1]);
-      const y = Number(params.get("y").split(/\{([^}]+)\}/g)[1]);
+      const x = Number(params.get("x"));
+      const y = Number(params.get("y"));
 
       if (isNumberInt(x) && isNumberInt(y) && x > 0 && y > 0) {
         response.end(lcm(BigInt(x), BigInt(y)).toString());
