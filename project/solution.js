@@ -15,30 +15,34 @@ function lcm(a, b) {
   return (a * b) / gcd(a, b);
 }
 
-function isNumberInt(value) {
-  return typeof value === "number" && Number.isInteger(value);
+function isNaturalString(value) {
+  return /^[1-9]\d*$/.test(value);
 }
 
 http
   .createServer(function (request, response) {
     response.statusCode = 200;
 
-    if (request.url.includes(MAIL)) {
-      const myURL = new URL(request.url, "http://localhost:8080");
-
-      const params = myURL.searchParams;
-
-      const x = Number(params.get("x"));
-      const y = Number(params.get("y"));
-
-      if (isNumberInt(x) && isNumberInt(y) && x > 0 && y > 0) {
-        response.end(lcm(BigInt(x), BigInt(y)).toString());
-      } else {
-        response.end("NaN");
-      }
-    } else {
+    if (!request.url.includes(MAIL)) {
       response.end("NaN");
+      return;
     }
+
+    const myURL = new URL(request.url, "http://localhost:8080");
+    const params = myURL.searchParams;
+
+    const xStr = params.get("x");
+    const yStr = params.get("y");
+
+    if (!isNaturalString(xStr) || !isNaturalString(yStr)) {
+      response.end("NaN");
+      return;
+    }
+
+    const x = BigInt(xStr);
+    const y = BigInt(yStr);
+
+    response.end(lcm(x, y).toString());
   })
   .listen(3000, function () {
     console.log("Сервер запущен");
